@@ -1,0 +1,124 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #000;
+  color: #fff;
+}
+
+.screenFirst {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.screenFirst .content {
+  width: 90%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 5px solid #fff;
+}
+
+.screenFirst .content .logo {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.screenFirst .content .logo span {
+  color: #ff0000;
+  font-size: 2.3rem;
+}
+
+.screenFirst .content h5 {
+  color: #ccc;
+  margin-bottom: 2rem;
+}
+
+.screenFirst .content .user {
+  display: flex;
+  flex-direction: column;
+}
+
+.screenFirst .content .user input {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.7rem 1rem;
+  font-size: 0.9rem;
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.screenFirst .content .user input::placeholder {
+  color: #ffff;
+}
+
+.screenFirst .content .user .information {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.screenFirst .content .user .information button {
+  width: 100%;
+  font-size: 0.85rem;
+  padding: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.screenFirst .content .user .information #btninstruction {
+  background: #fff000;
+  color: #000;
+}
+
+.screenInstruction {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  backdrop-filter: blur(5px);
+  height: 100dvh;
+  padding: 5%;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.screenInstruction .content {
+  width: 90%;
+  height: 90%;
+  padding: 2rem;
+  border: 5px solid #fff;
+}
+
+.screenInstruction button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: #ff0000;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  border: none;
+  font-size: 1.5rem;
+  padding-bottom: 0.3rem;
+  cursor: pointer;
+}
+
+.screenInstruction .list ol li {
+  list-style: circle;
+}

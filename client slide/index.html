@@ -7,6 +7,59 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <section class="screenFirst" id="screenHome">
+      <main class="content">
+        <h2 class="logo"><span>Shooter</span> Space</h2>
+        <h5>Selamat Datang di Game Sederhana</h5>
+        <div class="user">
+          <input
+            type="text"
+            id="username"
+            placeholder="Masukkan username anda"
+          />
+          <div class="information">
+            <button disabled type="button" id="startGame">Mulai</button>
+            <button
+              type="button"
+              id="btninstruction"
+              onclick="openInstruction()"
+            >
+              Instruksi
+            </button>
+          </div>
+        </div>
+      </main>
+    </section>
+
+    <section class="screenInstruction" id="screenInstruction">
+      <div class="content">
+        <button type="button" onclick="closeInstruction()">&times;</button>
+        <div class="list">
+          <ol>
+            <li>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad enim,
+              commodi incidunt ut magnam reiciendis eum ex illum consequatur
+              optio?
+            </li>
+            <li>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad enim,
+              commodi incidunt ut magnam reiciendis eum ex illum consequatur
+              optio?
+            </li>
+            <li>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad enim,
+              commodi incidunt ut magnam reiciendis eum ex illum consequatur
+              optio?
+            </li>
+            <li>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad enim,
+              commodi incidunt ut magnam reiciendis eum ex illum consequatur
+              optio?
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
     <script src="./script.js"></script>
   </body>
 </html>
