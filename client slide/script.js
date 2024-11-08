@@ -13,6 +13,8 @@ function closeInstruction() {
 username.addEventListener("input", () => {
   if (username.value.length > 0) {
     btnStart.disabled = false;
+  } else {
+    btnStart.disabled = true;
   }
 });
 
