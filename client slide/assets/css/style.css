@@ -9,9 +9,25 @@
 body {
   background: #000;
   color: #fff;
+  width: 100%;
+  height: 100dvh;
+}
+
+.hide {
+  display: none;
 }
 
 .screenFirst {
+  width: 100%;
+  height: 100dvh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}
+
+.screenFirst .screen {
   width: 100%;
   height: 100dvh;
   display: flex;
@@ -23,9 +39,9 @@ body {
   width: 90%;
   height: 90%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   border: 5px solid #fff;
 }
 
@@ -39,9 +55,12 @@ body {
   font-size: 2.3rem;
 }
 
-.screenFirst .content h5 {
+.screenFirst .content h4 {
   color: #ccc;
-  margin-bottom: 2rem;
+}
+
+.screenFirst .content h3 {
+  margin-bottom: 1.6rem;
 }
 
 .screenFirst .content .user {
@@ -81,6 +100,14 @@ body {
   color: #000;
 }
 
+.screenFirst .content .user select {
+  width: 100%;
+  font-size: 0.9rem;
+  padding: 0.6rem;
+  border: none;
+  margin-bottom: 0.5rem;
+}
+
 .screenInstruction {
   position: absolute;
   top: 0;
@@ -95,6 +122,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index: 5;
 }
 
 .screenInstruction .content {
@@ -121,4 +149,41 @@ body {
 
 .screenInstruction .list ol li {
   list-style: circle;
+}
+
+/* screen game */
+.screenGame {
+  position: relative;
+  overflow: hidden;
+  margin: auto;
+  width: 600px;
+  border: 5px solid #fff;
+  height: 100dvh;
+}
+
+.title_user {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: red;
+  padding: 0.3rem 0.6rem;
+}
+
+.myHero {
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  background-image: url("../images/myhero.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  left: 50%;
+  bottom: 20px;
+}
+
+.enemy {
+  width: 70px;
+  height: 50px;
+  position: absolute;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }

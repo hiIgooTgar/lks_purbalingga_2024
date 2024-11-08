@@ -3,33 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Shooter Alien Space</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
-    <section class="screenFirst" id="screenHome">
-      <main class="content">
-        <h2 class="logo"><span>Shooter</span> Space</h2>
-        <h5>Selamat Datang di Game Sederhana</h5>
-        <div class="user">
-          <input
-            type="text"
-            id="username"
-            placeholder="Masukkan username anda"
-          />
-          <div class="information">
-            <button disabled type="button" id="startGame">Mulai</button>
-            <button
-              type="button"
-              id="btninstruction"
-              onclick="openInstruction()"
-            >
-              Instruksi
-            </button>
+    <section class="screenFirst" id="screenFirst">
+      <main class="screen">
+        <main class="content">
+          <h2 class="logo"><span>Shooter</span> Alien Space</h2>
+          <h4>Selamat Datang di Game Sederhana</h4>
+          <h3>LKS SMK Kabupaten Purbalingga 2024</h3>
+          <div class="user">
+            <select id="levelGame">
+              <option value="0">Pilih level</option>
+              <option value="1">Easy</option>
+              <option value="2">Medium</option>
+              <option value="3">Hard</option>
+            </select>
+            <input
+              type="text"
+              id="username"
+              placeholder="Masukkan username anda"
+            />
+            <div class="information">
+              <button disabled type="button" id="startGame">Mulai</button>
+              <button
+                type="button"
+                id="btninstruction"
+                onclick="openInstruction()"
+              >
+                Instruksi
+              </button>
+            </div>
           </div>
-        </div>
+        </main>
       </main>
     </section>
+
+    <main class="screenGame hide" id="screenGame"></main>
 
     <section class="screenInstruction" id="screenInstruction">
       <div class="content">
@@ -60,6 +71,6 @@
         </div>
       </div>
     </section>
-    <script src="./script.js"></script>
+    <script src="assets/js/script.js"></script>
   </body>
 </html>
