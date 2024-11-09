@@ -52,6 +52,55 @@ window.addEventListener("keydown", (e) => {
   } else if (e.key == "ArrowDown" && topArrow > 0) {
     myHero.style.top = topArrow + 20 + "px";
   }
+
+  if (e.keyCode == 32) {
+    var bullets = document.createElement("div");
+    bullets.setAttribute("class", "bullets");
+    screenGame.append(bullets);
+
+    var moveBullets = setInterval(() => {
+      var enemy = document.getElementsByClassName("enemy");
+      for (var i = 0; i < enemy.length; i++) {
+        var emy = enemy[i];
+        var emyBound = emy.getBoundingClientRect();
+        var bulletBound = bullets.getBoundingClientRect();
+
+        if (
+          bulletBound.left >= emyBound.left &&
+          bulletBound.right <= emyBound.right &&
+          bulletBound.top <= emyBound.top &&
+          bulletBound.bottom <= emyBound.bottom
+        ) {
+          emy.parentElement.removeChild(emy);
+          bullets.parentElement.removeChild(bullets);
+
+          var elementBullets = document.createElement("div");
+          elementBullets.setAttribute("class", "bullets");
+          screenGame.append(elementBullets);
+
+          var score = document.createElement("div");
+          score.setAttribute("class", "score");
+          screenGame.append(score);
+
+          score.innerHTML = `Points : ` + parseInt(score.innerHTML) + 100;
+          console.log(score);
+        }
+
+        var bulletsBottom = parseInt(
+          window.getComputedStyle(bullets).getPropertyValue("bottom")
+        );
+
+        if (bulletsBottom >= 500) {
+          clearInterval(moveBullets);
+        }
+
+        console.log(bulletsBottom);
+
+        bullets.style.left = leftArrow + "px";
+        bullets.style.bottom = bulletsBottom + 3 + "px";
+      }
+    });
+  }
 });
 
 function moveEnemy() {
@@ -83,9 +132,6 @@ function startGame() {
   let myHero = document.createElement("div");
   myHero.setAttribute("class", "myHero");
   screenGame.append(myHero);
-
-  player.y = myHero.offsetTop;
-  player.x = myHero.offsetLeft;
 
   for (let i = 0; i < 5; i++) {
     let enemy = document.createElement("div");

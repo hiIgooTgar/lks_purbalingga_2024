@@ -59,7 +59,7 @@ body {
   color: #ccc;
 }
 
-.screenFirst .content h3 {
+.screenFirst .content .sub-title2 {
   margin-bottom: 1.6rem;
 }
 
@@ -169,6 +169,14 @@ body {
   padding: 0.3rem 0.6rem;
 }
 
+.score {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+  padding: 0.3rem 0.6rem;
+}
+
 .myHero {
   width: 70px;
   height: 70px;
@@ -185,5 +193,17 @@ body {
   height: 50px;
   position: absolute;
   background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.bullets {
+  position: absolute;
+  bottom: 20px;
+  left: -50px;
+  margin-left: 24px;
+  width: 2.5px;
+  height: 15px;
+  background: #0dc60d;
+  background-size: contain;
   background-repeat: no-repeat;
 }
