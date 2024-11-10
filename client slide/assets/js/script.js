@@ -59,8 +59,9 @@ window.addEventListener("keydown", (e) => {
     screenGame.append(bullets);
 
     var moveBullets = setInterval(() => {
-      var enemy = document.getElementsByClassName("enemy");
+      var enemy = document.querySelectorAll(".enemy");
       for (var i = 0; i < enemy.length; i++) {
+        console.log(enemy);
         var emy = enemy[i];
         var emyBound = emy.getBoundingClientRect();
         var bulletBound = bullets.getBoundingClientRect();
