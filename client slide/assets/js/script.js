@@ -58,10 +58,12 @@ window.addEventListener("keydown", (e) => {
     bullets.setAttribute("class", "bullets");
     screenGame.append(bullets);
 
+    bullets.style.left = leftArrow + 20 + "px";
+    bullets.style.bottom = topArrow + 20 + "px";
+
     var moveBullets = setInterval(() => {
       var enemy = document.querySelectorAll(".enemy");
       for (var i = 0; i < enemy.length; i++) {
-        console.log(enemy);
         var emy = enemy[i];
         var emyBound = emy.getBoundingClientRect();
         var bulletBound = bullets.getBoundingClientRect();
@@ -75,32 +77,29 @@ window.addEventListener("keydown", (e) => {
           emy.parentElement.removeChild(emy);
           bullets.parentElement.removeChild(bullets);
 
-          var elementBullets = document.createElement("div");
-          elementBullets.setAttribute("class", "bullets");
-          screenGame.append(elementBullets);
-
-          var score = document.createElement("div");
-          score.setAttribute("class", "score");
-          screenGame.append(score);
-
-          score.innerHTML = `Points : ` + parseInt(score.innerHTML) + 100;
-          console.log(score);
+          var score = document.querySelector(".score");
+          if (score) {
+            score.innerHTML =
+              "Points: " + (parseInt(score.innerHTML.split(":")[1]) + 100);
+          } else {
+            score = document.createElement("div");
+            score.setAttribute("class", "score");
+            score.innerHTML = "Points: 100";
+            screenGame.append(score);
+          }
         }
-
-        var bulletsBottom = parseInt(
-          window.getComputedStyle(bullets).getPropertyValue("bottom")
-        );
-
-        if (bulletsBottom >= 500) {
-          clearInterval(moveBullets);
-        }
-
-        console.log(bulletsBottom);
-
-        bullets.style.left = leftArrow + "px";
-        bullets.style.bottom = bulletsBottom + 3 + "px";
       }
-    });
+
+      var bulletsBottom = parseInt(
+        window.getComputedStyle(bullets).getPropertyValue("bottom")
+      );
+      if (bulletsBottom >= 500) {
+        clearInterval(moveBullets);
+        bullets.remove();
+      }
+
+      bullets.style.bottom = bulletsBottom + 5 + "px";
+    }, 50);
   }
 });
 
@@ -134,12 +133,16 @@ function startGame() {
   myHero.setAttribute("class", "myHero");
   screenGame.append(myHero);
 
-  for (let i = 0; i < 5; i++) {
+  let numEnemy = level.value * 5;
+
+  for (let i = 0; i < numEnemy; i++) {
     let enemy = document.createElement("div");
     enemy.setAttribute("class", "enemy");
     enemy.y = (i + 1) * 450 * -1;
     enemy.style.top = enemy.y + "px";
-    enemy.style.backgroundImage = `url(./assets/images/enemy${i + 1}.png)`;
+    enemy.style.backgroundImage = `url(./assets/images/enemy${
+      (i % 5) + 1
+    }.png)`;
     enemy.style.left = Math.floor(Math.random() * 450) + "px";
     screenGame.append(enemy);
   }
