@@ -126,7 +126,7 @@ body {
 }
 
 .screenInstruction .content {
-  width: 90%;
+  width: 50%;
   height: 90%;
   padding: 2rem;
   border: 5px solid #fff;
@@ -250,11 +250,6 @@ body {
   margin-bottom: 1rem;
 }
 
-#screenPause main .content .detail {
-  text-align: left;
-  width: 50%;
-}
-
 #screenPause main .content .detail h5 {
   margin-bottom: 0.5rem;
   font-size: 1rem;
@@ -271,8 +266,106 @@ body {
   border: none;
   outline: none;
   cursor: pointer;
-
   font-size: 0.9rem;
   letter-spacing: 1px;
   padding: 0.4rem 0.8rem;
+}
+
+/* screen game over */
+#screenGameOver {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  backdrop-filter: blur(5px);
+  height: 100dvh;
+  padding: 5%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+#screenGameOver main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 3% 0;
+}
+
+#screenGameOver main .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #dd1a1a;
+  width: 50%;
+}
+
+#screenGameOver main .content h1 {
+  font-size: 1.8rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 1rem;
+}
+
+#screenGameOver main .content .detail h5 {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+#screenGameOver main .content .btn-content {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+#screenGameOver main .content .btn-content button {
+  background: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  padding: 0.4rem 0.8rem;
+}
+
+.batas {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  border-top: 1px solid #333;
+}
+
+/* device-game */
+.device-game {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100dvh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  padding: 5%;
+}
+
+.device-game img {
+  width: 100px;
+  height: 100px;
+}
+
+.device-game h1 span {
+  color: #ff0000;
 }

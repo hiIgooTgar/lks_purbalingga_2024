@@ -8,14 +8,17 @@ const level = document.getElementById("levelGame");
 let player = { speed: 2, score: 0, start: false };
 let isPaused = false;
 let gameLoop;
+let enemyGameOver = 0;
 
 level.addEventListener("change", () => {
   if (level.value == 1) {
     player.speed = 2;
   } else if (level.value == 2) {
-    player.speed = 4;
+    player.speed = 3;
   } else if (level.value == 3) {
-    player.speed = 5;
+    player.speed = 4;
+  } else if (level.value == 4) {
+    player.speed = 6;
   }
 });
 
@@ -51,6 +54,10 @@ function startGame() {
   score.innerHTML = `Points : 0`;
   screenGame.appendChild(score);
 
+  const batas = document.createElement("div");
+  batas.setAttribute("class", "batas");
+  screenGame.appendChild(batas);
+
   window.requestAnimationFrame(mainGame);
 
   generateEnemy();
@@ -68,8 +75,12 @@ function moveEnemy() {
   enemies.forEach((enemy) => {
     let currentTop = parseInt(enemy.style.top.replace("px", ""));
     if (currentTop > 750) {
+      enemyGameOver++;
       enemy.style.top = "-100px";
       enemy.style.left = Math.floor(Math.random() * 450) + "px";
+      if (enemyGameOver >= 3) {
+        gameOver();
+      }
     } else {
       enemy.style.top = currentTop + player.speed + "px";
     }
@@ -146,7 +157,7 @@ function fireBullet(left, top) {
     }
 
     bullets.style.top = bulletTop - 5 + "px";
-  }, 10);
+  }, 7);
 }
 
 function openInstruction() {
@@ -171,10 +182,12 @@ function pauseGame() {
   let detailLevel;
   if (player.speed == 2) {
     detailLevel = "Easy";
-  } else if (player.speed == 4) {
+  } else if (player.speed == 3) {
     detailLevel = "Medium";
-  } else if (player.speed == 5) {
+  } else if (player.speed == 4) {
     detailLevel = "Hard";
+  } else if (player.speed == 6) {
+    detailLevel = "Very Hard";
   }
 
   const pauseOverlay = document.createElement("section");
@@ -206,11 +219,68 @@ function resumeGame() {
   player.start = true;
   document.getElementById("screenPause").remove();
   window.requestAnimationFrame(mainGame);
-  generateEnemies();
+  generateEnemy();
 }
 
 function quitgame() {
+  enemyGameOver = 0;
   isPaused = false;
   player.start = false;
   window.location.reload();
 }
+
+function gameOver() {
+  player.start = false;
+  isPaused = true;
+
+  let detailLevel;
+  if (player.speed == 2) {
+    detailLevel = "Easy";
+  } else if (player.speed == 3) {
+    detailLevel = "Medium";
+  } else if (player.speed == 4) {
+    detailLevel = "Hard";
+  } else if (player.speed == 6) {
+    detailLevel = "Very Hard";
+  }
+
+  const gameOverScreen = document.createElement("section");
+  gameOverScreen.id = "screenGameOver";
+  gameOverScreen.innerHTML = `
+  <main>
+        <div class="content">
+          <h1>Game Over</h1>
+          <div class="detail">
+            <h5>Username : ${username.value}</h5>
+            <h5>Points : ${player.score}</h5>
+            <h5>Level : ${detailLevel}</h5>
+          </div>
+          <div class="btn-content">
+            <button id="restratGame">Restart</button>
+          </div>
+        </div>
+      </main>
+  `;
+
+  document.body.appendChild(gameOverScreen);
+  gameOverScreen.addEventListener("click", quitgame);
+}
+
+window.onload = function () {
+  var mobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  if (mobile) {
+    var device = document.createElement("div");
+    device.setAttribute("class", "device-game");
+    device.innerHTML = `
+        <img src="./assets/images/warning.png" alt="Waring" />
+        <h1>Untuk memainkan gamenya harap menggunakan <span>Komputer/Laptop</span></h1>
+        <br>
+        <h2><i>Terima Kasih</i></h2>
+    `;
+    document.body.appendChild(device);
+  } else {
+  }
+};
