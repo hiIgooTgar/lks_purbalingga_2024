@@ -6,6 +6,8 @@ const username = document.getElementById("username");
 const level = document.getElementById("levelGame");
 
 let player = { speed: 2, score: 0, start: false };
+let isPaused = false;
+let gameLoop;
 
 level.addEventListener("change", () => {
   if (level.value == 1) {
@@ -55,7 +57,7 @@ function startGame() {
 }
 
 function mainGame() {
-  if (player.start) {
+  if (player.start && !player.isPaused) {
     moveEnemy();
     window.requestAnimationFrame(mainGame);
   }
@@ -86,7 +88,7 @@ function generateEnemy() {
       }.png)`;
       screenGame.appendChild(enemy);
     }
-  }, 1200);
+  }, 1500);
 }
 
 window.addEventListener("keydown", (e) => {
@@ -153,4 +155,62 @@ function openInstruction() {
 
 function closeInstruction() {
   instruction.style.display = "none";
+}
+
+document.addEventListener("keyup", (e) => {
+  if (e.key == "Escape") {
+    if (!isPaused) pauseGame();
+  }
+});
+
+function pauseGame() {
+  isPaused = true;
+  player.start = false;
+  clearInterval(gameLoop);
+
+  let detailLevel;
+  if (player.speed == 2) {
+    detailLevel = "Easy";
+  } else if (player.speed == 4) {
+    detailLevel = "Medium";
+  } else if (player.speed == 5) {
+    detailLevel = "Hard";
+  }
+
+  const pauseOverlay = document.createElement("section");
+  pauseOverlay.id = "screenPause";
+  pauseOverlay.innerHTML = `
+  <main>
+        <div class="content">
+          <h1>Game Pause</h1>
+          <div class="detail">
+            <h5>Username : ${username.value}</h5>
+            <h5>Points : ${player.score}</h5>
+            <h5>Level : ${detailLevel}</h5>
+          </div>
+          <div class="btn-content">
+            <button id="lanjutGame">Lanjut</button>
+            <button id="keluarGame">Keluar Game</button>
+          </div>
+        </div>
+      </main>
+  `;
+  screenGame.appendChild(pauseOverlay);
+
+  document.getElementById("lanjutGame").addEventListener("click", resumeGame);
+  document.getElementById("keluarGame").addEventListener("click", quitgame);
+}
+
+function resumeGame() {
+  isPaused = false;
+  player.start = true;
+  document.getElementById("screenPause").remove();
+  window.requestAnimationFrame(mainGame);
+  generateEnemies();
+}
+
+function quitgame() {
+  isPaused = false;
+  player.start = false;
+  window.location.reload();
 }
