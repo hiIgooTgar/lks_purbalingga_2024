@@ -145,10 +145,17 @@ body {
   font-size: 1.5rem;
   padding-bottom: 0.3rem;
   cursor: pointer;
+  float: right;
+}
+
+.screenInstruction .list h3 {
+  font-size: 1.5rem;
+  margin: 0 0 1.5rem;
 }
 
 .screenInstruction .list ol li {
   list-style: circle;
+  margin: 0 1rem;
 }
 
 /* screen game */
@@ -168,6 +175,17 @@ body {
   background: red;
   padding: 0.3rem 0.6rem;
   font-size: 0.9rem;
+  z-index: 5;
+}
+
+.lifeHero {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: red;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.9rem;
+  z-index: 10;
 }
 
 .score {
@@ -177,6 +195,7 @@ body {
   background: red;
   padding: 0.3rem 0.6rem;
   font-size: 0.9rem;
+  z-index: 5;
 }
 
 .myHero {
@@ -187,7 +206,8 @@ body {
   background-size: 100% 100%;
   background-repeat: no-repeat;
   left: 50%;
-  bottom: 20px;
+  bottom: 0;
+  z-index: 5;
 }
 
 .enemy {
@@ -196,6 +216,14 @@ body {
   position: absolute;
   background-size: 100% 100%;
   background-repeat: no-repeat;
+}
+
+.boom {
+  width: 70px;
+  height: 50px;
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
 }
 
 .bullets {
@@ -340,6 +368,8 @@ body {
   right: 0;
   height: 150px;
   border-top: 1px solid #333;
+  background: #333;
+  opacity: 0.3;
 }
 
 /* device-game */

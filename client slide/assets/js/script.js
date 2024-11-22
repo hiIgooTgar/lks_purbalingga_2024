@@ -74,7 +74,10 @@ function moveEnemy() {
   const enemies = document.querySelectorAll(".enemy");
   enemies.forEach((enemy) => {
     let currentTop = parseInt(enemy.style.top.replace("px", ""));
+
     if (currentTop > 750) {
+      let soundOut = new Audio("./assets/sound/out.mp3");
+      soundOut.play();
       enemyGameOver++;
       enemy.style.top = "-100px";
       enemy.style.left = Math.floor(Math.random() * 450) + "px";
@@ -103,6 +106,7 @@ function generateEnemy() {
 }
 
 window.addEventListener("keydown", (e) => {
+  let soundLaser = new Audio("./assets/sound/laser.mp3");
   const myHero = document.querySelector(".myHero");
   const left = parseInt(
     window.getComputedStyle(myHero).getPropertyValue("left")
@@ -114,14 +118,16 @@ window.addEventListener("keydown", (e) => {
     myHero.style.left = left + 20 + "px";
   } else if (e.key == "ArrowUp" && top > 450) {
     myHero.style.top = top - 20 + "px";
-  } else if (e.key == "ArrowDown" && top <= 500) {
+  } else if (e.key == "ArrowDown" && top <= 510) {
     myHero.style.top = top + 20 + "px";
   } else if (e.keyCode == 32) {
     fireBullet(left, top);
+    soundLaser.play();
   }
 });
 
 function fireBullet(left, top) {
+  let soundBoom = new Audio("./assets/sound/boom.mp3");
   const bullets = document.createElement("div");
   bullets.setAttribute("class", "bullets");
   bullets.style.left = left + 20 + "px";
@@ -142,6 +148,18 @@ function fireBullet(left, top) {
         bulletBound.top <= emyBound.bottom &&
         bulletBound.bottom >= emyBound.top
       ) {
+        let boomImg = document.createElement("img");
+        boomImg.src = "assets/images/boom.png";
+        boomImg.setAttribute("class", "boom");
+        boomImg.style.left = enemy.style.left;
+        boomImg.style.top = enemy.style.top;
+        screenGame.appendChild(boomImg);
+
+        setTimeout(() => {
+          boomImg.remove();
+        }, 300);
+
+        soundBoom.play();
         enemy.remove();
         bullets.remove();
         clearInterval(moveBullets);
