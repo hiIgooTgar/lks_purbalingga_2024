@@ -2,6 +2,7 @@ const screenFirst = document.getElementById("screenFirst");
 const screenGame = document.getElementById("screenGame");
 const btnGame = document.getElementById("startGame");
 const instruction = document.getElementById("screenInstruction");
+const leaderboard = document.getElementById("screenLeaderboard");
 const username = document.getElementById("username");
 const level = document.getElementById("levelGame");
 
@@ -186,6 +187,15 @@ function closeInstruction() {
   instruction.style.display = "none";
 }
 
+function openLeaderboard() {
+  leaderboard.style.display = "flex";
+  viewLeaderboard();
+}
+
+function closeLeaderboard() {
+  leaderboard.style.display = "none";
+}
+
 document.addEventListener("keyup", (e) => {
   if (e.key == "Escape") {
     if (!isPaused) pauseGame();
@@ -201,7 +211,7 @@ function pauseGame() {
   if (player.speed == 2) {
     detailLevel = "Easy";
   } else if (player.speed == 3) {
-    detailLevel = "Medium";
+    detailLevel = "Normal";
   } else if (player.speed == 4) {
     detailLevel = "Hard";
   } else if (player.speed == 6) {
@@ -255,12 +265,14 @@ function gameOver() {
   if (player.speed == 2) {
     detailLevel = "Easy";
   } else if (player.speed == 3) {
-    detailLevel = "Medium";
+    detailLevel = "Normal";
   } else if (player.speed == 4) {
     detailLevel = "Hard";
   } else if (player.speed == 6) {
     detailLevel = "Very Hard";
   }
+
+  getLeaderboard(username.value, player.score, detailLevel);
 
   const gameOverScreen = document.createElement("section");
   gameOverScreen.id = "screenGameOver";
@@ -284,6 +296,41 @@ function gameOver() {
   gameOverScreen.addEventListener("click", quitgame);
 }
 
+function getLeaderboard(username, score, level) {
+  const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+  leaderboard.push({ username, score, level });
+  localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+}
+
+function viewLeaderboard() {
+  const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+  const leaderboardContent = document.querySelector(
+    ".screenLeaderboard .content .list .detail"
+  );
+
+  leaderboardContent.innerHTML = `
+    <ol>
+      <h4>Username</h4>
+      <p>Igo JSON</p>
+      ${leaderboard.map((u) => `<p>${u.username}</p>`).join("")}
+    </ol>
+    <ol>
+      <h4>Level</h4>
+      <p>Very Hard</p>
+      ${leaderboard.map((l) => `<p>${l.level}</p>`).join("")}
+    </ol>
+    <ol>
+      <h4>Score</h4>
+      <p>5000000</p>
+      ${leaderboard.map((s) => `<p>${s.score}</p>`).join("")}
+    </ol>
+  `;
+}
+
+function clearLeaderboard() {
+  localStorage.removeItem("leaderboard");
+}
+
 window.onload = function () {
   var mobile =
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -299,6 +346,5 @@ window.onload = function () {
         <h2><i>Terima Kasih</i></h2>
     `;
     document.body.appendChild(device);
-  } else {
   }
 };

@@ -23,7 +23,7 @@
             <select id="levelGame">
               <option value="0">Pilih level</option>
               <option value="1">Easy</option>
-              <option value="2">Medium</option>
+              <option value="2">Normal</option>
               <option value="3">Hard</option>
               <option value="4">Very Hard</option>
             </select>
@@ -34,14 +34,23 @@
               placeholder="Masukkan username anda"
             />
             <div class="information">
+              <div class="inside">
+                <button
+                  type="button"
+                  id="btninstruction"
+                  onclick="openInstruction()"
+                >
+                  Instruksi
+                </button>
+                <button
+                  type="button"
+                  id="btnleaderboard"
+                  onclick="openLeaderboard()"
+                >
+                  Leaderboard
+                </button>
+              </div>
               <button disabled type="button" id="startGame">Mulai</button>
-              <button
-                type="button"
-                id="btninstruction"
-                onclick="openInstruction()"
-              >
-                Instruksi
-              </button>
             </div>
           </div>
         </main>
@@ -67,6 +76,16 @@
             <li>Tekan Escape untuk pause game</li>
             <li>Enjoy the game!</li>
           </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="screenLeaderboard hide" id="screenLeaderboard">
+      <div class="content">
+        <button type="button" onclick="closeLeaderboard()">&times;</button>
+        <div class="list">
+          <h3>Leaderboard | Space Shooter</h3>
+          <div class="detail"></div>
         </div>
       </div>
     </section>

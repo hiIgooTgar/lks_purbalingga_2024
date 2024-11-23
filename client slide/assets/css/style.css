@@ -84,7 +84,9 @@ body {
 
 .screenFirst .content .user .information {
   display: flex;
+  width: 100%;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .screenFirst .content .user .information button {
@@ -95,8 +97,19 @@ body {
   cursor: pointer;
 }
 
-.screenFirst .content .user .information #btninstruction {
+.screenFirst .content .user .information .inside {
+  display: flex;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.screenFirst .content .user .information .inside #btninstruction {
   background: #fff000;
+  color: #000;
+}
+
+.screenFirst .content .user .information .inside #btnleaderboard {
+  background: #00ff4c;
   color: #000;
 }
 
@@ -113,7 +126,7 @@ body {
   top: 0;
   left: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 1);
   width: 100%;
   backdrop-filter: blur(5px);
   height: 100dvh;
@@ -155,6 +168,84 @@ body {
 
 .screenInstruction .list ol li {
   list-style: circle;
+  margin: 0 1rem;
+}
+
+/* leaderboard */
+.screenLeaderboard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 1);
+  width: 100%;
+  backdrop-filter: blur(5px);
+  height: 100dvh;
+  padding: 5%;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.screenLeaderboard .content {
+  width: 50%;
+  height: 90%;
+  padding: 2rem;
+  overflow: hidden;
+  border: 5px solid #fff;
+}
+
+.screenLeaderboard button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: #ff0000;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  border: none;
+  font-size: 1.5rem;
+  padding-bottom: 0.3rem;
+  cursor: pointer;
+  float: right;
+}
+
+.screenLeaderboard .list h3 {
+  font-size: 1.5rem;
+  margin: 0 0 1.5rem;
+}
+
+.screenLeaderboard .list .detail {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 300px;
+  justify-content: space-between;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.screenLeaderboard .list .detail::-webkit-scrollbar {
+  width: 10px;
+}
+
+.screenLeaderboard .list .detail::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+.screenLeaderboard .list .detail::-webkit-scrollbar-thumb {
+  background: #dd1a1a;
+}
+
+.screenLeaderboard .list .detail h4 {
+  margin-bottom: 1rem;
+}
+
+.screenLeaderboard .list .detail ol li {
+  list-style: none;
   margin: 0 1rem;
 }
 
@@ -244,7 +335,7 @@ body {
   top: 0;
   left: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 1);
   width: 100%;
   backdrop-filter: blur(5px);
   height: 100dvh;
@@ -305,7 +396,7 @@ body {
   top: 0;
   left: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 1);
   width: 100%;
   backdrop-filter: blur(5px);
   height: 100dvh;
