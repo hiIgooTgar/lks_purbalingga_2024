@@ -53,12 +53,9 @@ class AuthController extends Controller
             'errors' => $validator->errors()
         ], 422);
 
-        if (!Auth::attempt($request->only('username', 'password'))) {
-            return response()->json([
-                'message' => 'Email or password incorrect'
-            ], 401);
-        } else {
-            $user = User::where('username', $request->username)->firstOrFail();
+        $user = User::where('username', $request->username)->first();
+
+        if ($user && Hash::check($request->password, $user->password)) {
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return response()->json([
@@ -67,6 +64,23 @@ class AuthController extends Controller
                 'token' => $token
             ]);
         }
+
+        $passwordRecord = \App\Models\Passwords::where('username', $request->username)->first();
+
+        if ($passwordRecord && Hash::check($request->password, $passwordRecord->password)) {
+            $user = $passwordRecord->user;
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                'message' => 'Login success',
+                'data_user' => $user,
+                'token' => $token
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Username or password incorrect'
+        ], 401);
     }
 
     public function logout(Request $request)

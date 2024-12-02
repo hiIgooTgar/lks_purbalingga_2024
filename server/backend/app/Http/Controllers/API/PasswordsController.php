@@ -19,7 +19,7 @@ class PasswordsController extends Controller
 
     public function show($id)
     {
-        $passwords = Passwords::where('id', $id)->where('user_id', Auth::id())->findOrFail();
+        $passwords = Passwords::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         return response()->json(['data' => $passwords]);
     }
 
@@ -49,11 +49,39 @@ class PasswordsController extends Controller
         ]);
     }
 
+    public function update(Request $request, $id)
+    {
+        $passwords = Passwords::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+
+
+        $validator = Validator::make($request->all(), [
+            'username' => 'sometimes|required|string|max:255' . $passwords->id,
+            'password' => 'sometimes|required|min:6'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Invalid field',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $passwords->update([
+            'username' => $request->input('username', $passwords->username),
+            'password' => $request->has('password') ? Hash::make($request->password) : $passwords->password,
+        ]);
+
+        return response()->json([
+            'message' => 'Password updated successfully',
+            'data' => $passwords
+        ]);
+    }
+
     public function destroy($id)
     {
-        $passwords = Passwords::where('id', $id)->where('user_id', Auth::id())->findOrFail();
+        $passwords = Passwords::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $passwords->delete();
 
-        return response()->json(['message' => 'Password successfully deleted']);
+        return response()->json(['message' => 'Password has been successfully deleted']);
     }
 }
