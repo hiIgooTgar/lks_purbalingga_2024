@@ -70,7 +70,6 @@ class AdminPasswordController extends Controller
         $passwords = Passwords::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'user_id' => 'sometimes|required' . $passwords->id,
             'username' => 'sometimes|required|string|max:255' . $passwords->id,
             'password' => 'sometimes|required|min:6'
         ]);

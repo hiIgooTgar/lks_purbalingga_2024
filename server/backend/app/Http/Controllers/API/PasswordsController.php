@@ -69,8 +69,7 @@ class PasswordsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $passwords = Passwords::where('user_id', Auth::id())->find($id);
-
+        $passwords = Passwords::where('user_id', Auth::id())->findOrFail($id);
 
         $validator = Validator::make($request->all(), [
             'username' => 'sometimes|required|string|max:255' . $passwords->id,
