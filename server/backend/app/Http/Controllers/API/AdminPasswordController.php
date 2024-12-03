@@ -5,16 +5,14 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Passwords;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class PasswordsController extends Controller
+class AdminPasswordController extends Controller
 {
     public function index()
     {
-        $passwords = Passwords::where('user_id', Auth::id())->get();
-
+        $passwords = Passwords::all();
         if (!$passwords->count()) {
             return response()->json([
                 'message' => 'Password found',
@@ -27,7 +25,7 @@ class PasswordsController extends Controller
 
     public function show($id)
     {
-        $passwords = Passwords::where('id', $id)->where('user_id', Auth::id())->find();
+        $passwords = Passwords::find($id);
 
         if (!$passwords) {
             return response()->json([
@@ -56,7 +54,7 @@ class PasswordsController extends Controller
         }
 
         $passwords = Passwords::create([
-            'user_id' => Auth::id(),
+            'user_id' => $request->user_id,
             'username' => $request->username,
             'password' => Hash::make($request->password),
         ]);
@@ -69,10 +67,10 @@ class PasswordsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $passwords = Passwords::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
-
+        $passwords = Passwords::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
+            'user_id' => 'sometimes|required' . $passwords->id,
             'username' => 'sometimes|required|string|max:255' . $passwords->id,
             'password' => 'sometimes|required|min:6'
         ]);
@@ -85,6 +83,7 @@ class PasswordsController extends Controller
         }
 
         $passwords->update([
+            'user_id' => $request->input('user_id', $passwords->user_id),
             'username' => $request->input('username', $passwords->username),
             'password' => $request->has('password') ? Hash::make($request->password) : $passwords->password,
         ]);
@@ -97,7 +96,7 @@ class PasswordsController extends Controller
 
     public function destroy($id)
     {
-        $passwords = Passwords::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $passwords = Passwords::findOrFail($id);
         $passwords->delete();
 
         return response()->json(['message' => 'Password has been successfully deleted']);

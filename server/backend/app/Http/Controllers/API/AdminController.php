@@ -13,7 +13,14 @@ class AdminController extends Controller
     public function index()
     {
         $users = User::all();
-        return response()->json(['data' => $users]);
+        if (!$users->empty()) {
+            return response()->json(['data' => $users]);
+        } else {
+            return response()->json([
+                'message' => 'Data users found',
+                'data' => 'Found'
+            ]);
+        }
     }
 
     public function show($id)
@@ -91,4 +98,5 @@ class AdminController extends Controller
 
         return response()->json(['message' => 'User data has been successfully deleted']);
     }
+
 }

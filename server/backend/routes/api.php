@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AdminController;
+use App\Http\Controllers\API\AdminPasswordController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\PasswordsController;
 use Illuminate\Http\Request;
@@ -35,6 +36,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/admin/users', [AdminController::class, 'store']);
         Route::put('/admin/users/{id}', [AdminController::class, 'update']);
         Route::delete("/admin/users/{id}", [AdminController::class, 'destroy']);
+
+        Route::get('/admin/passwords', [AdminPasswordController::class, 'index']);
+        Route::get("/admin/passwords/{id}", [AdminPasswordController::class, 'show']);
+        Route::post('/admin/passwords', [AdminPasswordController::class, 'store']);
+        Route::put('/admin/passwords/{id}', [AdminPasswordController::class, 'update']);
+        Route::delete("/admin/passwords/{id}", [AdminPasswordController::class, 'destroy']);
     });
 
     Route::get('/passwords', [PasswordsController::class, 'index']);

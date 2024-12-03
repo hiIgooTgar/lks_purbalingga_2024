@@ -65,17 +65,19 @@ class AuthController extends Controller
             ]);
         }
 
-        $passwordRecord = \App\Models\Passwords::where('username', $request->username)->first();
+        $passwordRecords = \App\Models\Passwords::where('username', $request->username)->get();
 
-        if ($passwordRecord && Hash::check($request->password, $passwordRecord->password)) {
-            $user = $passwordRecord->user;
-            $token = $user->createToken('auth_token')->plainTextToken;
+        foreach ($passwordRecords as $passwordRecord) {
+            if (Hash::check($request->password, $passwordRecord->password)) {
+                $user = $passwordRecord->user;
+                $token = $user->createToken('auth_token')->plainTextToken;
 
-            return response()->json([
-                'message' => 'Login success',
-                'data_user' => $user,
-                'token' => $token
-            ]);
+                return response()->json([
+                    'message' => 'Login success',
+                    'data_user' => $user,
+                    'token' => $token
+                ]);
+            }
         }
 
         return response()->json([
