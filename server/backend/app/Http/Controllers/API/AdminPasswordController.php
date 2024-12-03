@@ -13,13 +13,13 @@ class AdminPasswordController extends Controller
     public function index()
     {
         $passwords = Passwords::all();
-        if (!$passwords->count()) {
+        if ($passwords->count()) {
+            return response()->json(['data' => $passwords]);
+        } else {
             return response()->json([
                 'message' => 'Password found',
                 'data' => 'Found'
             ]);
-        } else {
-            return response()->json(['data' => $passwords]);
         }
     }
 

@@ -15,19 +15,19 @@ class PasswordsController extends Controller
     {
         $passwords = Passwords::where('user_id', Auth::id())->get();
 
-        if (!$passwords->count()) {
+        if ($passwords->count()) {
+            return response()->json(['data' => $passwords]);
+        } else {
             return response()->json([
                 'message' => 'Password found',
                 'data' => 'Found'
             ]);
-        } else {
-            return response()->json(['data' => $passwords]);
         }
     }
 
     public function show($id)
     {
-        $passwords = Passwords::where('id', $id)->where('user_id', Auth::id())->find();
+        $passwords = Passwords::where('user_id', Auth::id())->find($id);
 
         if (!$passwords) {
             return response()->json([
@@ -69,7 +69,7 @@ class PasswordsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $passwords = Passwords::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $passwords = Passwords::where('user_id', Auth::id())->find($id);
 
 
         $validator = Validator::make($request->all(), [
@@ -97,7 +97,7 @@ class PasswordsController extends Controller
 
     public function destroy($id)
     {
-        $passwords = Passwords::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $passwords = Passwords::where('user_id', Auth::id())->find($id);
         $passwords->delete();
 
         return response()->json(['message' => 'Password has been successfully deleted']);

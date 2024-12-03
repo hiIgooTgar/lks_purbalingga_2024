@@ -13,7 +13,7 @@ class AdminController extends Controller
     public function index()
     {
         $users = User::all();
-        if (!$users->empty()) {
+        if ($users->count()) {
             return response()->json(['data' => $users]);
         } else {
             return response()->json([
@@ -25,8 +25,17 @@ class AdminController extends Controller
 
     public function show($id)
     {
-        $users = User::findOrFail($id);
-        return response()->json(['data' => $users]);
+        $users = User::find($id);
+        if (!$users) {
+            return response()->json([
+                'message' => 'Password not found',
+                'data' => null
+            ], 404);
+        }
+
+        return response()->json([
+            'data' => $users
+        ]);
     }
 
     public function store(Request $request)
@@ -98,5 +107,4 @@ class AdminController extends Controller
 
         return response()->json(['message' => 'User data has been successfully deleted']);
     }
-
 }
