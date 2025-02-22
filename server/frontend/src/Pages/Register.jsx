@@ -7,13 +7,20 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("pengguna");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post("/auth/registrasi", { name, username, email, password });
+      await api.post("/auth/registrasi", {
+        name,
+        username,
+        email,
+        password,
+        role,
+      });
       navigate("/login");
     } catch (error) {
       if (error.response && error.response.data.errors) {
@@ -47,6 +54,7 @@ const Register = () => {
                           id="name"
                           type="text"
                           name="name"
+                          autoComplete="off"
                           className="form-control"
                           onChange={(e) => setName(e.target.value)}
                         />
@@ -62,6 +70,7 @@ const Register = () => {
                           id="username"
                           type="text"
                           name="username"
+                          autoComplete="off"
                           className="form-control"
                           onChange={(e) => setUsername(e.target.value)}
                         />
@@ -77,6 +86,7 @@ const Register = () => {
                           id="email"
                           type="email"
                           name="email"
+                          autoComplete="off"
                           className="form-control"
                           onChange={(e) => setEmail(e.target.value)}
                         />
@@ -92,6 +102,7 @@ const Register = () => {
                           id="password"
                           type="password"
                           name="password"
+                          autoComplete="off"
                           className="form-control"
                           onChange={(e) => setPassword(e.target.value)}
                         />
@@ -99,6 +110,7 @@ const Register = () => {
                           <p className="text-danger">{errors.password[0]}</p>
                         )}
                       </div>
+                      <input type="hidden" name="role" value={role} />
                       <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                         <button type="submit" className="btn btn-primary">
                           Sign Up
