@@ -11,7 +11,6 @@ class Passwords extends Model
 
     protected $fillable = [
         'user_id',
-        'username',
         'password'
     ];
 

@@ -44,7 +44,6 @@ class PasswordsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|max:255',
             'password' => 'required|min:6'
         ]);
 
@@ -57,7 +56,6 @@ class PasswordsController extends Controller
 
         $passwords = Passwords::create([
             'user_id' => Auth::id(),
-            'username' => $request->username,
             'password' => Hash::make($request->password),
         ]);
 
@@ -72,8 +70,7 @@ class PasswordsController extends Controller
         $passwords = Passwords::where('user_id', Auth::id())->findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'username' => 'sometimes|required|string|max:255' . $passwords->id,
-            'password' => 'sometimes|required|min:6'
+            'password' => 'sometimes|required|min:6' . $passwords->id
         ]);
 
         if ($validator->fails()) {
@@ -84,7 +81,6 @@ class PasswordsController extends Controller
         }
 
         $passwords->update([
-            'username' => $request->input('username', $passwords->username),
             'password' => $request->has('password') ? Hash::make($request->password) : $passwords->password,
         ]);
 
