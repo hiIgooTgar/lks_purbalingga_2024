@@ -12,30 +12,48 @@ class AdminPasswordController extends Controller
 {
     public function index()
     {
-        $passwords = Passwords::all();
-        if ($passwords->count()) {
-            return response()->json(['data' => $passwords]);
+        $passwords = Passwords::with('user')->get();
+        if ($passwords->count() > 0) {
+            return response()->json([
+                'data' => $passwords->map(function ($password) {
+                    return [
+                        'id' => $password->id,
+                        'user_id' => $password->user_id,
+                        'name' => $password->user->name,
+                        'username' => $password->user->username,
+                        'email' => $password->user->email,
+                        'role' => $password->user->role,
+                        'password' => $password->password,
+                    ];
+                })
+            ]);
         } else {
             return response()->json([
-                'message' => 'Password found',
-                'data' => 'Found'
+                'message' => 'No passwords found',
+                'data' => []
             ]);
         }
     }
 
     public function show($id)
     {
-        $passwords = Passwords::find($id);
-
-        if (!$passwords) {
+        $password = Passwords::with('user')->findOrFail($id);
+        if (!$password) {
             return response()->json([
                 'message' => 'Password not found',
                 'data' => null
             ], 404);
         }
-
         return response()->json([
-            'data' => $passwords
+            'data' => [
+                'id' => $password->id,
+                'user_id'  => $password->user_id,
+                'name'     => $password->user->name,
+                'username' => $password->user->username,
+                'email'    => $password->user->email,
+                'role'     => $password->user->role,
+                'password' => $password->password,
+            ]
         ]);
     }
 
@@ -68,7 +86,7 @@ class AdminPasswordController extends Controller
         $passwords = Passwords::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'password' => 'sometimes|required|min:6' . $passwords->id
+            'password' => 'sometimes|required|min:6'
         ]);
 
         if ($validator->fails()) {

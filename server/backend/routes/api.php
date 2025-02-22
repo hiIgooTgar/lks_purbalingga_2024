@@ -50,3 +50,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/passwords/{id}', [PasswordsController::class, 'update']);
     Route::delete("/passwords/{id}", [PasswordsController::class, 'destroy']);
 });
+
+Route::fallback(function () {
+    return response([
+        'status' => 404,
+        'message' => 'Not found'
+    ]);
+});

@@ -9,6 +9,8 @@ class Passwords extends Model
 {
     use HasFactory;
 
+    protected $table = 'passwords';
+    protected $guarded = ['id'];
     protected $fillable = [
         'user_id',
         'password'
@@ -16,6 +18,6 @@ class Passwords extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
