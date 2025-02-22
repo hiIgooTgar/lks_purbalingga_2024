@@ -13,8 +13,9 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await api.post("/auth/login", { username, password });
-      localStorage.setItem("token", response.data_user.token);
-      navigate("/dashboard");
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.data_user));
+      navigate("/");
     } catch (error) {
       if (error.response) {
         if (error.response.status == 401) {
@@ -66,6 +67,7 @@ const Login = () => {
                           type="text"
                           name="username"
                           className="form-control"
+                          autoComplete="off"
                           onChange={(e) => setUsername(e.target.value)}
                         />
                         {errors.username && (
@@ -80,6 +82,7 @@ const Login = () => {
                           id="password"
                           type="password"
                           name="password"
+                          autoComplete="off"
                           className="form-control"
                           onChange={(e) => setPassword(e.target.value)}
                         />
