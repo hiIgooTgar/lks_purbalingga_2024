@@ -5,6 +5,7 @@ import Dashboard from "./Pages/Dashboard";
 import AuthMiddleware from "./Middleware/AuthMiddleware";
 import Users from "./Pages/Users";
 import AddUsers from "./Pages/Users/AddUsers";
+import UpdateUsers from "./Pages/Users/UpdateUsers";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Dashboard />}></Route>
           <Route path="/users" element={<Users />}></Route>
           <Route path="/add-users" element={<AddUsers />}></Route>
+          <Route path="/edit-users/:id" element={<UpdateUsers />}></Route>
         </Route>
       </Routes>
     </Router>

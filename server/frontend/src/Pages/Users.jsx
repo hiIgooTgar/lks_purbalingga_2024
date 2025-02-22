@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "../Components/Navbar";
 import { useEffect, useState } from "react";
 import api from "../Api";
@@ -8,6 +8,7 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +37,27 @@ const Users = () => {
       user.username.toLowerCase().includes(search.toLowerCase()) ||
       user.email.toLowerCase().includes(search.toLowerCase())
   );
+
+  const handleEdit = (id) => {
+    navigate(`/edit-users/${id}`);
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Apakah yakin untuk menghapus user ini?")) {
+      return;
+    }
+    try {
+      const response = await api.delete(`/admin/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUsers(users.filter((user) => user.id != id));
+      alert(response.data.message);
+    } catch (error) {
+      console.error("Error delete API", error);
+    }
+  };
 
   return (
     <>
@@ -85,18 +107,24 @@ const Users = () => {
                         <span className="badge bg-primary">{user.role}</span>
                       </td>
                       <td className="d-flex gap-2">
-                        <a href="" className="btn btn-sm btn-warning">
+                        <button
+                          onClick={() => handleEdit(user.id)}
+                          className="btn btn-sm btn-warning"
+                        >
                           Ubah
-                        </a>
-                        <a href="" className="btn btn-sm btn-danger">
+                        </button>
+                        <button
+                          onClick={() => handleDelete(user.id)}
+                          className="btn btn-sm btn-danger"
+                        >
                           Hapus
-                        </a>
+                        </button>
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="5" className="text-center">
+                    <td colSpan="6" className="text-center">
                       No users found.
                     </td>
                   </tr>
