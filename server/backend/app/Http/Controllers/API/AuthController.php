@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Passwords;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -65,7 +66,9 @@ class AuthController extends Controller
             ]);
         }
 
-        $passwordRecords = \App\Models\Passwords::where('username', $request->username)->get();
+        $passwordRecords = Passwords::whereHas('user', function ($query) use ($request) {
+            $query->where('username', $request->username);
+        })->get();
 
         foreach ($passwordRecords as $passwordRecord) {
             if (Hash::check($request->password, $passwordRecord->password)) {
