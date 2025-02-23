@@ -64,7 +64,7 @@ const UpdateUsers = () => {
       <div className="container py-5">
         <div className="d-flex justify-content-between">
           <div className="">
-            <h2>Form Tambah Users</h2>
+            <h2>Form Edit Users</h2>
           </div>
           <div className="">
             <Link className="btn btn-primary" to={"/users"}>

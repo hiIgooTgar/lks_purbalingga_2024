@@ -63,7 +63,9 @@ export const Navbar = ({ user }) => {
             <Link to={"/users"} className="nav-link active">
               <span>Data Users</span>
             </Link>
-
+            <Link to={"/management-password"} className="nav-link active">
+              <span>Management Password</span>
+            </Link>
             <p className="nav-link mb-0 ">{currentUser.email}</p>
             <p
               onClick={handleLogout}

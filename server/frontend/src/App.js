@@ -6,6 +6,9 @@ import AuthMiddleware from "./Middleware/AuthMiddleware";
 import Users from "./Pages/Users";
 import AddUsers from "./Pages/Users/AddUsers";
 import UpdateUsers from "./Pages/Users/UpdateUsers";
+import ManagementPassword from "./Pages/ManagementPassword";
+import AddPassword from "./Pages/Management_password/AddPassword";
+import UpdatePassword from "./Pages/Management_password/UpdatePassword";
 
 function App() {
   return (
@@ -18,6 +21,18 @@ function App() {
           <Route path="/users" element={<Users />}></Route>
           <Route path="/add-users" element={<AddUsers />}></Route>
           <Route path="/edit-users/:id" element={<UpdateUsers />}></Route>
+          <Route
+            path="/management-password"
+            element={<ManagementPassword />}
+          ></Route>
+          <Route
+            path="/add-management-password"
+            element={<AddPassword />}
+          ></Route>
+          <Route
+            path="/edit-management-password/:id"
+            element={<UpdatePassword />}
+          ></Route>
         </Route>
       </Routes>
     </Router>
