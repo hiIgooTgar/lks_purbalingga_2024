@@ -57,19 +57,37 @@ export const Navbar = ({ user }) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav ms-auto">
-            <Link className="nav-link active" aria-current="page" to={"/"}>
-              <span>Home</span>
+            <Link className="nav-link active" to={"/"}>
+              Home
             </Link>
-            <Link to={"/users"} className="nav-link active">
-              <span>Data Users</span>
-            </Link>
-            <Link to={"/management-password"} className="nav-link active">
-              <span>Management Password</span>
-            </Link>
-            <p className="nav-link mb-0 ">{currentUser.email}</p>
+
+            {currentUser?.role === "admin" && (
+              <>
+                <Link className="nav-link active" to={"/users"}>
+                  Data Users
+                </Link>
+                <Link className="nav-link active" to={"/management-password"}>
+                  Management Password
+                </Link>
+              </>
+            )}
+
+            {currentUser?.role === "pengguna" && (
+              <Link className="nav-link active" to={"/my-passwords"}>
+                My Passwords
+              </Link>
+            )}
+
+            {currentUser && (
+              <Link className="nav-link active" to={"/profile"}>
+                My Profile
+              </Link>
+            )}
+
             <p
               onClick={handleLogout}
               className="nav-link mb-0 text-white btn btn-sm btn-danger"
+              style={{ cursor: "pointer" }}
             >
               Sign Out
             </p>

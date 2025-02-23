@@ -1,49 +1,22 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "../../Components/Navbar";
 import { Footer } from "../../Components/Footer";
-import { Link, useNavigate } from "react-router-dom";
 import api from "../../Api";
 
-const AddPassword = () => {
-  const [users, setUsers] = useState([]);
-  const [user_id, setUserid] = useState("");
+const AddPasswordUsers = () => {
   const [password, setPasswords] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await api.get("/admin/users", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const uniqueUser = [
-          ...new Map(
-            response.data.data.map((user) => [user.id, user])
-          ).values(),
-        ];
-        setUsers(uniqueUser);
-      } catch (error) {
-        console.error("Error fetch API", error);
-      }
-    };
-
-    if (token) {
-      fetchUser();
-    }
-  }, [token]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await api.post(
-        "/admin/passwords",
+        "passwords",
         {
-          user_id,
           password,
         },
         {
@@ -53,7 +26,7 @@ const AddPassword = () => {
         }
       );
       alert(response.data.message);
-      navigate("/management-password");
+      navigate("/my-passwords");
     } catch (error) {
       if (error.response) {
         if (error.response.status === 422) {
@@ -71,7 +44,7 @@ const AddPassword = () => {
             <h2>Form Tambah Passwords</h2>
           </div>
           <div className="">
-            <Link className="btn btn-primary" to={"/management-password"}>
+            <Link className="btn btn-primary" to={"/my-passwords"}>
               <span>Kembali</span>
             </Link>
           </div>
@@ -80,27 +53,7 @@ const AddPassword = () => {
           <div className="card-body">
             <form onSubmit={handleSubmit}>
               <div className="row">
-                <div className="mb-3 col-md-6 col-sm-12">
-                  <label className="mb-1" htmlFor="user_id">
-                    User ID | Name
-                  </label>
-                  <select
-                    name="user_id"
-                    value={user_id}
-                    onChange={(e) => setUserid(e.target.value)}
-                    className="form-control"
-                    id="user_id"
-                  >
-                    <option value="">-- Choice Role --</option>
-
-                    {users.map((user) => (
-                      <option key={user.id} value={user.id}>
-                        {user.id} | {user.name} | {user.role}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="mb-3 col-md-6 col-sm-12">
+                <div className="mb-3 col-md-12">
                   <label className="mb-1" htmlFor="password">
                     Password
                   </label>
@@ -131,4 +84,4 @@ const AddPassword = () => {
   );
 };
 
-export default AddPassword;
+export default AddPasswordUsers;
